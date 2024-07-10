@@ -6,37 +6,37 @@ interface IUser {
   password: string;
 }
 
-const API_URL = 'http://localhost:4000/users';
+const { VITE_API_URL } = import.meta.env
 
 const register = async (user: IUser) => {
-  const response = await axios.post(`${API_URL}`, user);
+  const response = await axios.post(`${VITE_API_URL}`, user);
   console.log(response);
   return response.data;
 };
 
 const login = async (email: string, password: string) => {
-  const response = await axios.post(`${API_URL}/login`, { email, password });
+  const response = await axios.post(`${VITE_API_URL}/login`, { email, password });
   return response.data;
 };
 
 const list = async () => {
-  const response = await axios.get(API_URL);
+  const response = await axios.get(VITE_API_URL);
   return response.data;
 };
 
 const deleteUser = async (id: string) => {
-  const response = await axios.delete(`${API_URL}/${id}`);
+  const response = await axios.delete(`${VITE_API_URL}/${id}`);
   return response.data;
 };
 
 const addFriend = async (userId: string, friendId: string) => {
-  const response = await axios.put(`${API_URL}/${userId}/friends/${friendId}`);
+  const response = await axios.put(`${VITE_API_URL}/${userId}/friends/${friendId}`);
   return response.data;
 };
 
 const removeFriend = async (userId: string, friendId: string) => {
   try {
-    const response = await axios.delete(`${API_URL}/${userId}/friends/${friendId}`);
+    const response = await axios.delete(`${VITE_API_URL}/${userId}/friends/${friendId}`);
     return response.data;
   } catch (error) {
     console.error('Failed to remove friend:', error);
@@ -45,7 +45,7 @@ const removeFriend = async (userId: string, friendId: string) => {
 };
 
 const updateUser = async (id: string, newName: string) => {
-  const response = await axios.put(`${API_URL}/${id}`, { name: newName });
+  const response = await axios.put(`${VITE_API_URL}/${id}`, { name: newName });
   return response.data;
 };
 

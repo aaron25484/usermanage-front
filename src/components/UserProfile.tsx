@@ -12,13 +12,13 @@ const UserProfile: React.FC = () => {
   const [newName, setNewName] = useState<string>('');
 
   const { userId } = useParams<{ userId: string }>();
-  const API_URL = "http://localhost:4000/users/"
+  const { VITE_API_URL } = import.meta.env
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         if (userId) {
-          const response = await axios.get(`${API_URL}${userId}`);
+          const response = await axios.get(`${VITE_API_URL}${userId}`);
           setUser(response.data);
           setNewName(response.data.name);
 
