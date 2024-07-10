@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Typography, Box, Button, Card, CardActions, CardContent } from '@mui/material';
+import { Container, Typography, Box, Button, Card, CardActions, CardContent, IconButton, TextField } from '@mui/material';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import userServices from '../services/userServices';
+import EditIcon from '@mui/icons-material/Edit';
+import SaveIcon from '@mui/icons-material/Save';
 
 const UserProfile: React.FC = () => {
   const [user, setUser] = useState<any>(null);
+  const [editingName, setEditingName] = useState<boolean>(false);
+  const [newName, setNewName] = useState<string>('');
+
   const { userId } = useParams<{ userId: string }>();
   const API_URL = "http://localhost:4000/users/"
 
@@ -15,6 +20,8 @@ const UserProfile: React.FC = () => {
         if (userId) {
           const response = await axios.get(`${API_URL}${userId}`);
           setUser(response.data);
+          setNewName(response.data.name);
+
         }
       } catch (err) {
         console.error('Failed to fetch user data:', err);
@@ -43,16 +50,64 @@ const UserProfile: React.FC = () => {
     }
   };
 
+  const handleUpdateName = async () => {
+    if (userId && newName.trim()) {
+      try {
+        const updatedUser = await userServices.updateUser(userId, newName);
+        setUser(updatedUser);
+        setEditingName(false);
+      } catch (error) {
+        console.error('Failed to update name', error);
+      }
+    }
+  };
+
   return (
     <Container maxWidth="md">
       {user ? (
         <Box mt={4}>
-          <Typography variant="h4" gutterBottom>
-            {user.name}
-          </Typography>
-          <Typography variant="h6" gutterBottom>
-            {user.email}
-          </Typography>
+          <Card sx={{ mb: 4, p: 2, boxShadow: 3 }}>
+            <CardContent>
+              <Box display="flex" alignItems="center" justifyContent="space-between">
+                {editingName ? (
+                  <TextField
+                    value={newName}
+                    onChange={(e) => setNewName(e.target.value)}
+                    autoFocus
+                    fullWidth
+                    variant="outlined"
+                    size="small"
+                    sx={{ mr: 2 }}
+                  />
+                ) : (
+                  <Typography variant="h5">
+                    {user.name}
+                  </Typography>
+                )}
+                {editingName ? (
+                  <IconButton
+                    sx={{ ml: 1 }}
+                    onClick={handleUpdateName}
+                    color="primary"
+                  >
+                    <SaveIcon />
+                  </IconButton>
+                ) : (
+                  <IconButton
+                    sx={{ ml: 1 }}
+                    onClick={() => setEditingName(true)}
+                    color="primary"
+                  >
+                    <EditIcon />
+                  </IconButton>
+                )}
+              </Box>
+              <Typography variant="h6" gutterBottom>
+                {user.email}
+              </Typography>
+            </CardContent>
+          </Card>
+
           <Typography variant="h5" mt={4} gutterBottom>
             Friends List
           </Typography>
@@ -70,7 +125,8 @@ const UserProfile: React.FC = () => {
                   </CardContent>
                   <CardActions>
                     <Button
-                      variant="outlined" sx={{color:'#062A62'}}
+                      variant="outlined"
+                      sx={{ color: '#062A62' }}
                       onClick={() => handleRemoveFriend(friend._id)}
                     >
                       Remove
