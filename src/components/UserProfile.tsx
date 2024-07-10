@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Typography, Box, Button } from '@mui/material';
+import { Container, Typography, Box, Button, Card, CardActions, CardContent } from '@mui/material';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import userServices from '../services/userServices';
@@ -30,8 +30,6 @@ const UserProfile: React.FC = () => {
       return;
     }
 
-    console.log(`Removing friend with ID: ${friendId} from user with ID: ${userId}`);
-
     if (window.confirm('Are you sure you want to remove this friend?')) {
       try {
         await userServices.removeFriend(userId, friendId);
@@ -46,23 +44,39 @@ const UserProfile: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="md">
       {user ? (
         <Box mt={4}>
-          <Typography variant="h4">Welcome, {user.name}</Typography>
-          <Typography variant="h6">Email: {user.email}</Typography>
-          <Typography variant="h5" mt={4}>Friends List</Typography>
+          <Typography variant="h4" gutterBottom>
+            {user.name}
+          </Typography>
+          <Typography variant="h6" gutterBottom>
+            {user.email}
+          </Typography>
+          <Typography variant="h5" mt={4} gutterBottom>
+            Friends List
+          </Typography>
           {user.friends.length > 0 ? (
             <Box>
               {user.friends.map((friend: any) => (
-                <Box key={friend._id} display="flex" alignItems="center" mb={2}>
-                  <Typography variant="body1" style={{ flexGrow: 1 }}>
-                    {friend.name}
-                  </Typography>
-                  <Button variant="contained" color="secondary" onClick={() => handleRemoveFriend(friend._id)}>
-                    Delete
-                  </Button>
-                </Box>
+                <Card key={friend._id} sx={{ display: 'flex', mb: 2, boxShadow: 3 }}>
+                  <CardContent sx={{ flex: 1 }}>
+                    <Typography variant="body1" fontWeight="bold">
+                      {friend.name}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      {friend.email}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button
+                      variant="outlined" sx={{color:'#062A62'}}
+                      onClick={() => handleRemoveFriend(friend._id)}
+                    >
+                      Remove
+                    </Button>
+                  </CardActions>
+                </Card>
               ))}
             </Box>
           ) : (
@@ -70,7 +84,9 @@ const UserProfile: React.FC = () => {
           )}
         </Box>
       ) : (
-        <Typography variant="h6" mt={4}>Loading...</Typography>
+        <Typography variant="h6" mt={4}>
+          Loading...
+        </Typography>
       )}
     </Container>
   );

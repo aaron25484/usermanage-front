@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Box, Container, Dialog, DialogActions, DialogContent, DialogTitle, List, ListItem, ListItemText, Typography } from '@mui/material';
+import { Button, Box, Container, Dialog, DialogActions, DialogContent, DialogTitle, Typography, Card, CardActions, CardContent } from '@mui/material';
 import userServices from '../services/userServices';
 import { useAuth } from '../context/authContext';
 
@@ -57,20 +57,27 @@ const UserList: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="md">
       <Box mt={4}>
-        <Typography variant="h4">User List</Typography>
-        <List>
-          {users.map(user => (
-            <ListItem key={user._id}>
-            <ListItemText primary={user.name} secondary={user.email} />
-            {isAuthenticated && (
-              <Button variant="contained" color="primary" onClick={() => handleAddFriend(user._id)}>Add Friend</Button>
-            )}
-            <Button variant="contained" color="secondary" onClick={() => handleDeleteClick(user._id)}>Delete</Button>
-          </ListItem>
-          ))}
-        </List>
+        <Typography variant="h5" sx={{color: '#22487B'}} gutterBottom>User List</Typography>
+        {users.map(user => (
+          <Card key={user._id} variant="outlined" sx={{ mb: 2, boxShadow: 3, display: 'flex', alignItems: 'center' }}>
+            <CardContent sx={{ flex: 1 }}>
+              <Typography variant="h6" fontWeight="bold">{user.name}</Typography>
+              <Typography variant="body2" color="textSecondary">{user.email}</Typography>
+            </CardContent>
+            <CardActions sx={{ ml: 'auto', display: 'flex', flexDirection: 'column' }}>
+              {isAuthenticated && (
+                <Button variant="contained" sx={{backgroundColor:'#062A62', mb: 1}} onClick={() => handleAddFriend(user._id)}>
+                  Add Friend
+                </Button>
+              )}
+              <Button variant="outlined" sx={{color:'#062A62'}} onClick={() => handleDeleteClick(user._id)}>
+                Delete
+              </Button>
+            </CardActions>
+          </Card>
+        ))}
       </Box>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Confirm Delete</DialogTitle>
