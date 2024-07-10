@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AppBar, Toolbar, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/authContext';
 
 const NavBar: React.FC = () => {
 
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, userId, userName } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log('NavBar - isAuthenticated:', isAuthenticated);
+    console.log('NavBar - userId:', userId);
+    console.log('NavBar - userName:', userName);
+  }, [isAuthenticated, userId, userName]);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   return (
     <AppBar position="fixed">
@@ -15,8 +27,14 @@ const NavBar: React.FC = () => {
           User Management
         </Button>
         {isAuthenticated && (
-          <Button color="inherit" onClick={logout} style={{ marginLeft: 'auto' }}>Logout</Button>
-        )}      </Toolbar>
+          <>
+            <Button color="inherit" component={Link} to={`/profile/${userId}`} style={{ marginLeft: 'auto' }}>
+              Welcome, {userName}
+            </Button>
+            <Button color="inherit" onClick={handleLogout}>Logout</Button>
+          </>
+        )}
+      </Toolbar>
     </AppBar>
   );
 };

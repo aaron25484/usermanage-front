@@ -19,7 +19,7 @@ const RegisterForm: React.FC = () => {
       setEmail('');
       setPassword('');
       alert('User registered successfully');
-      login(newUser._id)
+      login(newUser._id, newUser.name)
       navigate(`/profile/${newUser._id}`);
     } catch (error) {
       alert('Failed to register user');

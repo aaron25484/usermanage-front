@@ -16,7 +16,7 @@ const Login: React.FC = () => {
       const { user } = await userServices.login(email, password);
       setEmail('');
       setPassword('');
-      login(user._id)
+      login(user._id, user.name)
       navigate(`/profile/${user._id}`);
     } catch (error) {
       alert('Failed to login user');

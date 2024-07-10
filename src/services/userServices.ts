@@ -34,12 +34,23 @@ const addFriend = async (userId: string, friendId: string) => {
   return response.data;
 };
 
+const removeFriend = async (userId: string, friendId: string) => {
+  try {
+    const response = await axios.delete(`${API_URL}/${userId}/friends/${friendId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to remove friend:', error);
+    throw error;
+  }
+};
+
 const userServices = {
   register,
   login,
   list,
   delete: deleteUser,
-  addFriend
+  addFriend,
+  removeFriend
 };
 
 export default userServices;
