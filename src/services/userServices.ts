@@ -29,11 +29,17 @@ const deleteUser = async (id: string) => {
   return response.data;
 };
 
+const addFriend = async (userId: string, friendId: string) => {
+  const response = await axios.put(`${API_URL}/${userId}/friends/${friendId}`);
+  return response.data;
+};
+
 const userServices = {
   register,
   login,
   list,
-  delete: deleteUser
+  delete: deleteUser,
+  addFriend
 };
 
 export default userServices;

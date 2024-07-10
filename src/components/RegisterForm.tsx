@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { TextField, Button, Box } from '@mui/material';
 import userServices from '../services/userServices';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/authContext';
 
 const RegisterForm: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,6 +19,7 @@ const RegisterForm: React.FC = () => {
       setEmail('');
       setPassword('');
       alert('User registered successfully');
+      login(newUser._id)
       navigate(`/profile/${newUser._id}`);
     } catch (error) {
       alert('Failed to register user');

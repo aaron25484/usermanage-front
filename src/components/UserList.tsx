@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Box, Container, Dialog, DialogActions, DialogContent, DialogTitle, List, ListItem, ListItemText, Typography } from '@mui/material';
 import userServices from '../services/userServices';
+import { useAuth } from '../context/authContext';
 
 interface IUser {
   _id: string;
@@ -12,6 +13,7 @@ const UserList: React.FC = () => {
   const [users, setUsers] = useState<IUser[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
+  const { isAuthenticated, userId } = useAuth();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -36,6 +38,19 @@ const UserList: React.FC = () => {
     }
   };
 
+  const handleAddFriend = async (friendId: string) => {
+    if (!userId) {
+      alert('User not authenticated');
+      return;
+    }
+    try {
+      await userServices.addFriend(userId, friendId);
+      alert('Friend added successfully');
+    } catch (error) {
+      alert('Failed to add friend');
+    }
+  };
+
   const handleClose = () => {
     setOpen(false);
     setSelectedUser(null);
@@ -47,11 +62,13 @@ const UserList: React.FC = () => {
         <Typography variant="h4">User List</Typography>
         <List>
           {users.map(user => (
-            <ListItem key={user._id} secondaryAction={
-              <Button variant="contained" color="secondary" onClick={() => handleDeleteClick(user._id)}>Delete</Button>
-            }>
-              <ListItemText primary={user.name} secondary={user.email} />
-            </ListItem>
+            <ListItem key={user._id}>
+            <ListItemText primary={user.name} secondary={user.email} />
+            {isAuthenticated && (
+              <Button variant="contained" color="primary" onClick={() => handleAddFriend(user._id)}>Add Friend</Button>
+            )}
+            <Button variant="contained" color="secondary" onClick={() => handleDeleteClick(user._id)}>Delete</Button>
+          </ListItem>
           ))}
         </List>
       </Box>

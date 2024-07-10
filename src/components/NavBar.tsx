@@ -1,9 +1,11 @@
 import React from 'react';
 import { AppBar, Toolbar, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/authContext';
 
 const NavBar: React.FC = () => {
 
+  const { isAuthenticated, logout } = useAuth();
 
   return (
     <AppBar position="fixed">
@@ -12,8 +14,9 @@ const NavBar: React.FC = () => {
         <Button color="inherit" component={Link} to="/" style={{ flexGrow: 1 }}>
           User Management
         </Button>
-        <Button color="inherit">Logout</Button>
-      </Toolbar>
+        {isAuthenticated && (
+          <Button color="inherit" onClick={logout} style={{ marginLeft: 'auto' }}>Logout</Button>
+        )}      </Toolbar>
     </AppBar>
   );
 };
