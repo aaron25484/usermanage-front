@@ -20,7 +20,7 @@ const login = async (email: string, password: string) => {
 };
 
 const list = async () => {
-  const response = await axios.get(`${VITE_API_URL}/users`);
+  const response = await axios.get(`${VITE_API_URL}users`);
   return response.data;
 };
 
