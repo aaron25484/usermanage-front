@@ -6,7 +6,7 @@ interface IUser {
   password: string;
 }
 
-const VITE_API_URL = import.meta.env.VITE_API_URL;
+const { VITE_API_URL} = import.meta.env
 
 const register = async (user: IUser) => {
   const response = await axios.post(`${VITE_API_URL}users`, user);
