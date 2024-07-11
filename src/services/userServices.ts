@@ -6,7 +6,8 @@ interface IUser {
   password: string;
 }
 
-const { VITE_API_URL } = import.meta.env
+const VITE_API_URL = import.meta.env.VITE_API_URL;
+console.log('VITE_API_URL:', VITE_API_URL);
 
 const register = async (user: IUser) => {
   const response = await axios.post(`${VITE_API_URL}users`, user);
@@ -19,8 +20,13 @@ const profile = async (userId: string) => {
 }
 
 const login = async (email: string, password: string) => {
-  const response = await axios.post(`${VITE_API_URL}users`, { email, password });
-  return response.data;
+  try {
+    const response = await axios.post(`${VITE_API_URL}users/login`, { email, password });
+    return response.data;
+  } catch (error) {
+    console.error('Login failed:', error);
+    throw error;
+  }
 };
 
 const list = async () => {

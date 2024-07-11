@@ -16,8 +16,12 @@ const UserProfile: React.FC = () => {
       try {
         if (userId) {
           const response = await userServices.profile(userId);
-          setUser(response.data);
-          setNewName(response.data.name);
+          if (response) {
+            setUser(response);
+            setNewName(response.name);
+          } else {
+            console.error('No user data found');
+          }
         }
       } catch (err) {
         console.error('Failed to fetch user data:', err);
