@@ -19,7 +19,7 @@ const profile = async (userId: string) => {
 }
 
 const login = async (email: string, password: string) => {
-  const response = await axios.post(`${VITE_API_URL}users/login`, { email, password });
+  const response = await axios.post(`${VITE_API_URL}users`, { email, password });
   return response.data;
 };
 
