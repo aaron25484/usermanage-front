@@ -4,12 +4,14 @@ import { useParams } from 'react-router-dom';
 import userServices from '../services/userServices';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
+import { useAuth } from '../context/authContext';
 
 const UserProfile: React.FC = () => {
   const [user, setUser] = useState<any>(null);
   const [editingName, setEditingName] = useState<boolean>(false);
   const [newName, setNewName] = useState<string>('');
   const { userId } = useParams<{ userId: string }>();
+  const { updateUserName } = useAuth();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -55,6 +57,7 @@ const UserProfile: React.FC = () => {
       try {
         const updatedUser = await userServices.updateUser(userId, newName);
         setUser(updatedUser);
+        updateUserName(newName);
         setEditingName(false);
       } catch (error) {
         console.error('Failed to update name', error);
