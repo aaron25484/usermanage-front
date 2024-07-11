@@ -1,30 +1,85 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+# User Manage Front
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Made with **React, Typescript, Material UI, Jest** and deployed with **Vercel**
 
-## Expanding the ESLint configuration
+Made by [Aaron de los Santos](https://github.com/aaron25484)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Table of Contents
 
-- Configure the top-level `parserOptions` property like this:
+- [User Manage Front](#User-manage-front)
+  - [About the Project](#about-the-project)
+  - [Visit the Page](#visit-the-page)
+  - [Installation and Setup](#installation-and-setup)
+  - [Running the Test Suite](#running-the-test-suite)
+  - [Tecnologies Used](#tecnologies-used)
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+## About the Project
+
+The main objective of this project is to create a simple user management application in which you can authenticate, registrate and add friends. The goal is to have CRUD operations.
+
+## Visit the Page
+
+The page is deployed on Vercel. You can visit it on this URL:
+
+[User Manage Front](https://user-manage-front.vercel.app/)
+
+## Installation and Setup
+
+Clone the repository. You will need **[node](https://nodejs.org/es)** and **[pnpm](https://pnpm.io/)** installed globally on your machine.
+
+```
+https://github.com/aaron25484/usermanage-front.git
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Go to the project folder:
+
+````
+cd usermanage-front
+````
+
+Install dependencies via pnpm:
+ 
+
+``````
+pnpm install
+``````
+
+
+Start the development server:
+``````
+pnpm run dev
+``````
+
+
+Visit the app:
+
+[http://localhost:5173/](http://localhost:5173/)
+
+## Running the Test Suite
+
+Execute the following command to run the test suite:
+
+````
+pnpm test
+````
+The test suite will execute, and the results will be displayed in the terminal. You'll see information about which tests passed, failed, or encountered errors.
+
+Also, if you want to run a specific test file or focus on a particular test suite, you can use the following command:
+
+`````
+pnpm test <name-of-the-file>
+``````
+
+
+## Tecnologies Used
+
+- [React](https://es.react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Material UI](https://mui.com/)
+- [Vercel](https://www.vercel.com/)
+- [Jest](https://jestjs.io/es-ES/)
+- 
+
+# Have fun with User Manage Front!!!
