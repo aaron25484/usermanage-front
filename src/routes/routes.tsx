@@ -4,6 +4,7 @@ import UserProfile from "../components/UserProfile";
 import Login from "../components/Login";
 import RegisterForm from "../components/RegisterForm";
 import UserList from "../components/UserList";
+import React from "react";
 
 const RoutesComponent: FC = () => {
     return (
