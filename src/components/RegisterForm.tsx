@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, Card, CardContent, Typography } from '@mui/material';
 import userServices from '../services/userServices';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/authContext';
 
 const RegisterForm: React.FC = () => {
@@ -80,9 +80,10 @@ const RegisterForm: React.FC = () => {
               Already have an account?
             </Typography>
             <Button
+              component={Link}
               variant="text"
               color="secondary"
-              href="/login"
+              to="/login"
               sx={{ mt: 1 }}
             >
               Login
