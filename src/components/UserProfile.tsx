@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Typography, Box, Button, Card, CardActions, CardContent, IconButton, TextField } from '@mui/material';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import userServices from '../services/userServices';
 import EditIcon from '@mui/icons-material/Edit';
@@ -10,18 +9,15 @@ const UserProfile: React.FC = () => {
   const [user, setUser] = useState<any>(null);
   const [editingName, setEditingName] = useState<boolean>(false);
   const [newName, setNewName] = useState<string>('');
-
   const { userId } = useParams<{ userId: string }>();
-  const { VITE_API_URL } = import.meta.env
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         if (userId) {
-          const response = await axios.get(`${VITE_API_URL}${userId}`);
+          const response = await userServices.profile(userId);
           setUser(response.data);
           setNewName(response.data.name);
-
         }
       } catch (err) {
         console.error('Failed to fetch user data:', err);

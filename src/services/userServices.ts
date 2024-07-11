@@ -10,9 +10,13 @@ const { VITE_API_URL } = import.meta.env
 
 const register = async (user: IUser) => {
   const response = await axios.post(`${VITE_API_URL}users`, user);
-  console.log(response);
   return response.data;
 };
+
+const profile = async (userId: string) => {
+  const response = await axios.get(`${VITE_API_URL}users/${userId}`);
+  return response.data;
+}
 
 const login = async (email: string, password: string) => {
   const response = await axios.post(`${VITE_API_URL}users/login`, { email, password });
@@ -56,7 +60,8 @@ const userServices = {
   delete: deleteUser,
   addFriend,
   removeFriend,
-  updateUser
+  updateUser,
+  profile
 };
 
 export default userServices;
